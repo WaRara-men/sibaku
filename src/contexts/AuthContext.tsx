@@ -31,11 +31,23 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       return;
     }
 
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      setSession(session);
-      setUser(session?.user ?? null);
-      setLoading(false);
-    });
+    const initAuth = async () => {
+        const { data: { session } } = await supabase.auth.getSession();
+        if (session) {
+            setSession(session);
+            setUser(session.user);
+        } else {
+            // Auto sign-in anonymously on load
+            const { data, error } = await supabase.auth.signInAnonymously();
+            if (!error && data.session) {
+                setSession(data.session);
+                setUser(data.user);
+            }
+        }
+        setLoading(false);
+    };
+    
+    initAuth();
 
     const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
       setSession(session);

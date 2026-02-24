@@ -6,19 +6,19 @@ import { Button } from '../components/ui/Button';
 export const Login: React.FC = () => {
   const [nickname, setNickname] = useState('');
   const [loading, setLoading] = useState(false);
-  const { signInAnonymously, updateNickname } = useAuth();
+  const { updateNickname } = useAuth(); // Already signed in anonymously
   const navigate = useNavigate();
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
     try {
-      await signInAnonymously(nickname);
       await updateNickname(nickname);
-      navigate('/');
+      // Go back to previous page or home
+      navigate(-1);
     } catch (error) {
-      console.error('Login error:', error);
-      alert('ログインに失敗しました');
+      console.error('Update profile error:', error);
+      alert('プロフィールの更新に失敗しました');
     } finally {
       setLoading(false);
     }

@@ -17,6 +17,8 @@ export const Home: React.FC = () => {
     }
   };
 
+  // Auto sign-in logic is handled in AuthContext now, so user is ready to play immediately.
+
   return (
     <div className="flex flex-col items-center justify-center min-h-[80vh] py-4">
       {/* Top Image */}

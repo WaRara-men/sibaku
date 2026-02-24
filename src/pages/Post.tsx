@@ -6,9 +6,9 @@ import { supabase, hasSupabaseEnv } from '../lib/supabase';
 import { useAuth } from '../contexts/AuthContext';
 
 export const Post: React.FC = () => {
+  const { user } = useAuth();
   const navigate = useNavigate();
   const fileInputRef = useRef<HTMLInputElement>(null);
-  const { signInAnonymously } = useAuth();
   
   const [content, setContent] = useState('');
   const [file, setFile] = useState<File | null>(null);
@@ -56,6 +56,12 @@ export const Post: React.FC = () => {
       return;
     }
 
+    if (!user?.user_metadata?.full_name) {
+      alert('投稿するにはニックネームが必要です');
+      navigate('/login');
+      return;
+    }
+
     setIsSubmitting(true);
 
     try {
@@ -96,9 +102,6 @@ export const Post: React.FC = () => {
       // I should sign in anonymously if not signed in.
       
       const { data: { session } } = await supabase.auth.getSession();
-      if (!session) {
-        await signInAnonymously();
-      }
 
       const { error: insertError } = await supabase.from('posts').insert({
         content,
