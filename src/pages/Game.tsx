@@ -60,7 +60,7 @@ export const Game: React.FC = () => {
   const startGame = () => {
     setGameState({
       isPlaying: true,
-      timeLeft: 30,
+      timeLeft: customDuration,
       count: 0,
       isFinished: false,
     });

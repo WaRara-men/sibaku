@@ -21,10 +21,6 @@ export const Home: React.FC = () => {
 
   return (
     <div className="flex flex-col items-center justify-center min-h-[80vh] py-4">
-      {/* Top Image */}
-      <div className="w-full max-w-sm mb-6 animate-in fade-in zoom-in duration-500">
-        <img src="/assets/top.png" alt="しばく！！" className="w-full h-auto object-contain drop-shadow-2xl filter brightness-110" />
-      </div>
 
       <div className="w-full space-y-4 px-4">
         <InstallButton />
