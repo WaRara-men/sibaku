@@ -20,7 +20,7 @@ const SHIBAKU_WORDS = ['バシッ!', 'ドカッ!', 'オラァ!', 'シバく!', '
 export const Game: React.FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const { user, signInAnonymously } = useAuth();
+  const { user } = useAuth();
 
   const customDuration = location.state?.duration || 30;
 
@@ -134,15 +134,17 @@ export const Game: React.FC = () => {
     // Save score to leaderboard
     if (hasSupabaseEnv && supabase) {
       try {
-        const { data: { session } } = await supabase.auth.getSession();
+        const nickname = user?.user_metadata?.full_name || '名無しのしばき屋';
 
         // Save to the new game_scores table
-        await supabase.from('game_scores').insert({
+        const { error: scoreError } = await supabase.from('game_scores').insert({
           score: gameState.count,
           duration: customDuration,
-          nickname: user?.user_metadata?.full_name || '名無しのしばき屋',
+          nickname: nickname,
           user_id: user?.id
         });
+
+        if (scoreError) throw scoreError;
 
         // Also update shibaku_logs if it's a specific post
         if (postId) {

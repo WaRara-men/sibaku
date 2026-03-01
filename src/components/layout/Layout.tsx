@@ -6,7 +6,7 @@ import { useAuth } from '../../contexts/AuthContext';
 
 export const Layout: React.FC = () => {
   const location = useLocation();
-  const { user } = useAuth();
+  const { user, signOut } = useAuth();
 
   const navItems = [
     { icon: Home, label: 'ホーム', path: '/' },
