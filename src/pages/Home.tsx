@@ -24,7 +24,7 @@ export const Home: React.FC = () => {
 
       <header className="mb-8 text-center relative">
         <div className="absolute top-0 right-0 bg-red-600 text-white text-[10px] font-black px-2 py-0.5 rounded-bl-lg transform rotate-3">
-          V2.0-LIVE
+          V2.1-FINAL
         </div>
         <div className="inline-block relative">
           {/* This div was empty in the instruction, assuming it's a placeholder or part of a larger structure not fully provided */}
