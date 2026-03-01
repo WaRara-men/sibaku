@@ -23,60 +23,59 @@ export const Home: React.FC = () => {
     <div className="flex flex-col items-center justify-center min-h-[80vh] py-4">
       {/* Top Image */}
       <div className="w-full max-w-sm mb-6 animate-in fade-in zoom-in duration-500">
-        <img src="/assets/top.png" alt="しばく！！" className="w-full h-auto object-contain drop-shadow-xl" />
+        <img src="/design/top.png" alt="しばく！！" className="w-full h-auto object-contain drop-shadow-2xl filter brightness-110" />
       </div>
 
       <div className="w-full space-y-4 px-4">
         <InstallButton />
-        
-        <div className="bg-white/90 backdrop-blur-sm p-6 rounded-2xl shadow-xl border-4 border-black flex flex-col items-center space-y-4">
+
+        <div className="premium-card p-6 flex flex-col items-center space-y-4 border-4 border-black">
           <h2 className="text-xl font-black text-center">ストレス発散する？</h2>
-          
+
           <div className="w-full flex justify-center gap-2 mb-2">
             {[10, 30, 60].map((sec) => (
               <button
                 key={sec}
                 onClick={() => setDuration(sec)}
-                className={`flex-1 py-3 px-2 rounded-xl text-lg font-black border-2 transition-all duration-200 ${
-                  duration === sec 
-                    ? 'bg-red-600 border-black text-white shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] transform -translate-y-1' 
+                className={`flex-1 py-3 px-2 rounded-xl text-lg font-black border-2 transition-all duration-200 ${duration === sec
+                    ? 'bg-red-600 border-black text-white shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] transform -translate-y-1'
                     : 'bg-white border-zinc-300 text-zinc-400 hover:bg-zinc-50'
-                }`}
+                  }`}
               >
                 {sec}秒
               </button>
             ))}
           </div>
 
-          <Button 
-            size="lg" 
-            className="w-full text-2xl py-6 bg-yellow-400 hover:bg-yellow-300 text-black border-4 border-black font-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] active:shadow-[0px_0px_0px_0px_rgba(0,0,0,1)] active:translate-y-1 transition-all"
+          <Button
+            size="lg"
+            className="w-full text-2xl py-8 bg-red-600 hover:bg-red-500 text-white border-4 border-black font-black shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] active:shadow-[0px_0px_0px_0px_rgba(0,0,0,1)] active:translate-y-1 transition-all animate-pulse-slow"
             onClick={() => navigate('/game', { state: { duration } })}
           >
-            START!
+            SHIBAKU!
           </Button>
-          
+
           <div className="relative w-full">
             <input
-                type="file"
-                ref={fileInputRef}
-                className="hidden"
-                accept="image/*"
-                onChange={handleCustomImage}
+              type="file"
+              ref={fileInputRef}
+              className="hidden"
+              accept="image/*"
+              onChange={handleCustomImage}
             />
-            <Button 
-                variant="ghost" 
-                className="w-full text-zinc-600 font-bold text-sm flex items-center justify-center gap-2 mt-2 hover:bg-zinc-100"
-                onClick={() => fileInputRef.current?.click()}
+            <Button
+              variant="ghost"
+              className="w-full text-zinc-600 font-bold text-sm flex items-center justify-center gap-2 mt-2 hover:bg-zinc-100"
+              onClick={() => fileInputRef.current?.click()}
             >
-                <ImagePlus className="w-4 h-4" />
-                <span>写真を選んでしばく</span>
+              <ImagePlus className="w-4 h-4" />
+              <span>写真を選んでしばく</span>
             </Button>
           </div>
         </div>
 
-        <Button 
-          variant="secondary" 
+        <Button
+          variant="secondary"
           className="w-full border-2 border-black font-bold shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]"
           onClick={() => navigate('/post')}
         >

@@ -6,6 +6,7 @@ import { ImpactBubble } from '../components/ui/ImpactBubble';
 import { supabase, hasSupabaseEnv } from '../lib/supabase';
 import { clsx } from 'clsx';
 import { useAuth } from '../contexts/AuthContext';
+import { Trophy, Star, Target, Circle, Heart } from 'lucide-react';
 
 interface GameState {
   isPlaying: boolean;
@@ -19,7 +20,7 @@ const SHIBAKU_WORDS = ['バシッ!', 'ドカッ!', 'オラァ!', 'シバく!', '
 export const Game: React.FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  
+
   const customDuration = location.state?.duration || 30;
 
   const [gameState, setGameState] = useState<GameState>({
@@ -28,7 +29,7 @@ export const Game: React.FC = () => {
     count: 0,
     isFinished: false,
   });
-  
+
   // Custom image passed from Post page or other source
   const customImage = location.state?.imageUrl;
   const postId = location.state?.postId;
@@ -79,15 +80,15 @@ export const Game: React.FC = () => {
     const newClicks = [];
     const count = Math.floor(Math.random() * 3) + 1; // 1 to 3 effects per tap
     for (let i = 0; i < count; i++) {
-        const id = clickIdRef.current++;
-        const word = SHIBAKU_WORDS[Math.floor(Math.random() * SHIBAKU_WORDS.length)];
-        const rotation = Math.random() * 120 - 60; // -60 to 60 deg (More rotation)
-        const scale = 1.5 + Math.random() * 2.5; // 1.5 to 4.0 (Bigger)
-        // Scatter position slightly
-        const offsetX = (Math.random() - 0.5) * 100;
-        const offsetY = (Math.random() - 0.5) * 100;
-        
-        newClicks.push({ id, x: clientX + offsetX, y: clientY + offsetY, word, rotation, scale });
+      const id = clickIdRef.current++;
+      const word = SHIBAKU_WORDS[Math.floor(Math.random() * SHIBAKU_WORDS.length)];
+      const rotation = Math.random() * 120 - 60; // -60 to 60 deg (More rotation)
+      const scale = 1.5 + Math.random() * 2.5; // 1.5 to 4.0 (Bigger)
+      // Scatter position slightly
+      const offsetX = (Math.random() - 0.5) * 100;
+      const offsetY = (Math.random() - 0.5) * 100;
+
+      newClicks.push({ id, x: clientX + offsetX, y: clientY + offsetY, word, rotation, scale });
     }
     setClicks((prev) => [...prev, ...newClicks]);
 
@@ -99,29 +100,29 @@ export const Game: React.FC = () => {
 
     // 3. Target Distortion (Squash & Stretch & Shake)
     setTargetTransform({
-        scale: 0.8 + Math.random() * 0.4, // 0.8 - 1.2
-        rotate: Math.random() * 40 - 20,  // -20 - 20 deg
-        x: Math.random() * 20 - 10,
-        y: Math.random() * 20 - 10
+      scale: 0.8 + Math.random() * 0.4, // 0.8 - 1.2
+      rotate: Math.random() * 40 - 20,  // -20 - 20 deg
+      x: Math.random() * 20 - 10,
+      y: Math.random() * 20 - 10
     });
     setTimeout(() => setTargetTransform({ scale: 1, rotate: 0, x: 0, y: 0 }), 150);
-    
+
     // 4. Vibrate
     if (navigator.vibrate) {
-        navigator.vibrate([50, 20, 50]); // Double tap vibration
+      navigator.vibrate([50, 20, 50]); // Double tap vibration
     }
 
     // 5. Container Shake
     if (containerRef.current) {
-        containerRef.current.classList.remove('shake-hard');
-        void containerRef.current.offsetWidth; // trigger reflow
-        containerRef.current.classList.add('shake-hard');
+      containerRef.current.classList.remove('shake-hard');
+      void containerRef.current.offsetWidth; // trigger reflow
+      containerRef.current.classList.add('shake-hard');
     }
 
     // Cleanup clicks
     setTimeout(() => {
-        const idsToRemove = newClicks.map(c => c.id);
-        setClicks((prev) => prev.filter((c) => !idsToRemove.includes(c.id)));
+      const idsToRemove = newClicks.map(c => c.id);
+      setClicks((prev) => prev.filter((c) => !idsToRemove.includes(c.id)));
     }, 800);
   };
 
@@ -157,33 +158,47 @@ export const Game: React.FC = () => {
     });
   };
 
+  const getRankInfo = (count: number) => {
+    if (count >= 150) return { label: '神レベル', icon: <Trophy className="w-16 h-16 text-yellow-500 animate-bounce" />, color: 'text-yellow-600', bg: 'bg-yellow-50' };
+    if (count >= 100) return { label: '達人レベル', icon: <Star className="w-16 h-16 text-zinc-400 animate-pulse" />, color: 'text-zinc-600', bg: 'bg-zinc-50' };
+    if (count >= 50) return { label: '玄人レベル', icon: <Target className="w-16 h-16 text-orange-600" />, color: 'text-orange-700', bg: 'bg-orange-50' };
+    if (count >= 20) return { label: '凡人レベル', icon: <Circle className="w-16 h-16 text-blue-500" />, color: 'text-blue-600', bg: 'bg-blue-50' };
+    return { label: '初心者レベル', icon: <Heart className="w-16 h-16 text-zinc-300" />, color: 'text-zinc-400', bg: 'bg-zinc-50' };
+  };
+
   if (gameState.isFinished) {
+    const rank = getRankInfo(gameState.count);
     return (
-      <div className="flex flex-col items-center justify-center space-y-8 py-10 h-full animate-in fade-in zoom-in duration-500 bg-red-50">
+      <div className={clsx("flex flex-col items-center justify-center space-y-8 py-10 h-full animate-in fade-in zoom-in duration-500", rank.bg)}>
         <motion.div
           initial={{ scale: 0, rotate: -180 }}
           animate={{ scale: 1, rotate: 0 }}
           transition={{ type: "spring", stiffness: 260, damping: 20 }}
+          className="flex flex-col items-center gap-4"
         >
-          <ImpactBubble variant="yellow" className="text-4xl">FINISH!</ImpactBubble>
+          <div className="p-6 bg-white rounded-full shadow-2xl border-4 border-black relative">
+            {rank.icon}
+            <div className="absolute -top-4 -right-4">
+              <ImpactBubble variant="yellow" className="text-xl">RANK!</ImpactBubble>
+            </div>
+          </div>
+          <h2 className={clsx("text-4xl font-black italic impact-text", rank.color)}>{rank.label}</h2>
         </motion.div>
-        
+
         <div className="text-center">
           <p className="text-zinc-500 mb-2 font-bold">あなたのしばき回数</p>
           <div className="relative inline-block">
-             <div className="absolute -inset-4 bg-red-500 rounded-full blur-xl opacity-30 animate-pulse"></div>
-             <motion.p 
-               className="relative text-8xl font-black text-red-600 drop-shadow-lg impact-text"
-               initial={{ scale: 0.5, opacity: 0 }}
-               animate={{ scale: 1, opacity: 1 }}
-               transition={{ delay: 0.2 }}
-             >
-               {gameState.count}
-             </motion.p>
+            <div className="absolute -inset-8 bg-red-500 rounded-full blur-2xl opacity-20 animate-pulse"></div>
+            <motion.p
+              className="relative text-9xl font-black text-red-600 drop-shadow-2xl impact-text italic tracking-tighter"
+              initial={{ scale: 0.5, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              transition={{ delay: 0.2, type: "spring" }}
+            >
+              {gameState.count}
+            </motion.p>
+            <p className="font-black text-2xl text-red-800 italic text-right -mt-4">Hits!</p>
           </div>
-          <p className="text-2xl font-bold mt-4 text-zinc-800 animate-pulse">
-            {gameState.count > 150 ? '🔥 神レベルの連打！ 🔥' : gameState.count > 100 ? '💢 すごいストレス！ 💢' : '👊 まだまだいける？ 👊'}
-          </p>
         </div>
 
         <div className="w-full space-y-4 px-6">
@@ -215,55 +230,55 @@ export const Game: React.FC = () => {
       {!gameState.isPlaying ? (
         <div className="flex-1 flex flex-col items-center justify-center w-full z-10">
           <div className="mb-8 relative w-72 h-72 flex items-center justify-center">
-             {customImage ? (
-                <div className="relative w-full h-full">
-                    <img src={customImage} alt="Target" className="w-full h-full object-cover rounded-3xl shadow-2xl opacity-60 grayscale hover:grayscale-0 transition-all duration-500" />
-                    <div className="absolute inset-0 bg-red-500 mix-blend-overlay opacity-20"></div>
-                </div>
-             ) : (
-                <div className="w-full h-full bg-zinc-100 rounded-full flex items-center justify-center border-8 border-dashed border-zinc-300 animate-[spin_10s_linear_infinite]">
-                  <span className="text-zinc-300 font-black text-xl rotate-12">SHIBAKU?</span>
-                </div>
-             )}
-             
-             <div className="absolute inset-0 flex items-center justify-center">
-                <Button 
-                    onClick={startGame} 
-                    size="lg" 
-                    className="text-4xl px-12 py-12 rounded-full shadow-[8px_8px_0px_0px_#000] bg-yellow-400 hover:bg-yellow-300 text-black font-black animate-bounce border-4 border-black"
-                >
-                    START!
-                </Button>
-             </div>
+            {customImage ? (
+              <div className="relative w-full h-full">
+                <img src={customImage} alt="Target" className="w-full h-full object-cover rounded-3xl shadow-2xl opacity-60 grayscale hover:grayscale-0 transition-all duration-500" />
+                <div className="absolute inset-0 bg-red-500 mix-blend-overlay opacity-20"></div>
+              </div>
+            ) : (
+              <div className="w-full h-full bg-zinc-100 rounded-full flex items-center justify-center border-8 border-dashed border-zinc-300 animate-[spin_10s_linear_infinite]">
+                <span className="text-zinc-300 font-black text-xl rotate-12">SHIBAKU?</span>
+              </div>
+            )}
+
+            <div className="absolute inset-0 flex items-center justify-center">
+              <Button
+                onClick={startGame}
+                size="lg"
+                className="text-4xl px-12 py-12 rounded-full shadow-[8px_8px_0px_0px_#000] bg-yellow-400 hover:bg-yellow-300 text-black font-black animate-bounce border-4 border-black"
+              >
+                START!
+              </Button>
+            </div>
           </div>
           <p className="font-bold text-zinc-500 mt-4">ストレスをぶつけろ！</p>
         </div>
       ) : (
-        <div 
+        <div
           className="flex-1 w-full flex items-center justify-center relative touch-manipulation select-none z-10"
           onClick={handleShibaku}
         >
           {customImage ? (
-            <div className="w-full h-full p-4" style={{ 
-                transform: `scale(${targetTransform.scale}) rotate(${targetTransform.rotate}deg) translate(${targetTransform.x}px, ${targetTransform.y}px)`,
-                transition: 'transform 0.05s ease-out'
+            <div className="w-full h-full p-4" style={{
+              transform: `scale(${targetTransform.scale}) rotate(${targetTransform.rotate}deg) translate(${targetTransform.x}px, ${targetTransform.y}px)`,
+              transition: 'transform 0.05s ease-out'
             }}>
-                <img 
-                src={customImage} 
-                alt="Target" 
-                className="w-full h-full object-cover rounded-2xl shadow-inner border-4 border-red-600" 
-                />
+              <img
+                src={customImage}
+                alt="Target"
+                className="w-full h-full object-cover rounded-2xl shadow-inner border-4 border-red-600"
+              />
             </div>
           ) : (
-            <div 
-                className="w-72 h-72 bg-red-600 rounded-full flex items-center justify-center shadow-[0_0_50px_rgba(255,0,0,0.6)] border-8 border-black relative overflow-hidden group"
-                style={{ 
-                    transform: `scale(${targetTransform.scale}) rotate(${targetTransform.rotate}deg) translate(${targetTransform.x}px, ${targetTransform.y}px)`,
-                    transition: 'transform 0.05s ease-out'
-                }}
+            <div
+              className="w-72 h-72 bg-red-600 rounded-full flex items-center justify-center shadow-[0_0_50px_rgba(255,0,0,0.6)] border-8 border-black relative overflow-hidden group"
+              style={{
+                transform: `scale(${targetTransform.scale}) rotate(${targetTransform.rotate}deg) translate(${targetTransform.x}px, ${targetTransform.y}px)`,
+                transition: 'transform 0.05s ease-out'
+              }}
             >
-                <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/diagmonds-light.png')] opacity-30"></div>
-                <span className="text-white font-black text-6xl select-none impact-text rotate-[-5deg] group-active:rotate-[5deg] transition-transform">しばく!</span>
+              <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/diagmonds-light.png')] opacity-30"></div>
+              <span className="text-white font-black text-6xl select-none impact-text rotate-[-5deg] group-active:rotate-[5deg] transition-transform">しばく!</span>
             </div>
           )}
 
@@ -276,26 +291,26 @@ export const Game: React.FC = () => {
                 exit={{ opacity: 0 }}
                 transition={{ duration: 0.4, ease: "easeOut" }}
                 className="absolute pointer-events-none z-50 drop-shadow-[2px_2px_0px_#000]"
-                style={{ 
-                    position: 'fixed', 
-                    left: click.x, 
-                    top: click.y, 
-                    transform: 'translate(-50%, -50%)' 
+                style={{
+                  position: 'fixed',
+                  left: click.x,
+                  top: click.y,
+                  transform: 'translate(-50%, -50%)'
                 }}
               >
                 <ImpactBubble variant={click.id % 2 === 0 ? 'red' : 'yellow'} spikeIntensity="high" className="text-3xl min-w-[120px]">
-                    {click.word}
+                  {click.word}
                 </ImpactBubble>
               </motion.div>
             ))}
           </AnimatePresence>
         </div>
       )}
-      
+
       {gameState.isPlaying && (
-         <div className="absolute bottom-10 text-red-600 text-2xl font-black animate-pulse impact-text tracking-widest w-full text-center bg-white/80 py-2">
-           連打!!! 連打!!! 連打!!!
-         </div>
+        <div className="absolute bottom-10 text-red-600 text-2xl font-black animate-pulse impact-text tracking-widest w-full text-center bg-white/80 py-2">
+          連打!!! 連打!!! 連打!!!
+        </div>
       )}
     </div>
   );
