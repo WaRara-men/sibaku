@@ -23,7 +23,7 @@ export const Home: React.FC = () => {
     <div className="flex flex-col items-center justify-center min-h-[80vh] py-4">
       {/* Top Image */}
       <div className="w-full max-w-sm mb-6 animate-in fade-in zoom-in duration-500">
-        <img src="/design/top.png" alt="しばく！！" className="w-full h-auto object-contain drop-shadow-2xl filter brightness-110" />
+        <img src="/assets/top.png" alt="しばく！！" className="w-full h-auto object-contain drop-shadow-2xl filter brightness-110" />
       </div>
 
       <div className="w-full space-y-4 px-4">
@@ -38,8 +38,8 @@ export const Home: React.FC = () => {
                 key={sec}
                 onClick={() => setDuration(sec)}
                 className={`flex-1 py-3 px-2 rounded-xl text-lg font-black border-2 transition-all duration-200 ${duration === sec
-                    ? 'bg-red-600 border-black text-white shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] transform -translate-y-1'
-                    : 'bg-white border-zinc-300 text-zinc-400 hover:bg-zinc-50'
+                  ? 'bg-red-600 border-black text-white shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] transform -translate-y-1'
+                  : 'bg-white border-zinc-300 text-zinc-400 hover:bg-zinc-50'
                   }`}
               >
                 {sec}秒

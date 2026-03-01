@@ -1,0 +1,284 @@
+commit 6cd5fa90057fee42a68efaf000db30a62742af11
+Author: Trae AI <trae-ai@example.com>
+Date:   Sun Mar 1 20:06:12 2026 +0900
+
+    deploy: Force push local changes to main to trigger Vercel build
+
+diff --git a/package-lock.json b/package-lock.json
+index 807ff5b..6a64ec2 100644
+--- a/package-lock.json
++++ b/package-lock.json
+@@ -83,7 +83,6 @@
+       "resolved": "https://registry.npmjs.org/@babel/core/-/core-7.29.0.tgz",
+       "integrity": "sha512-CGOfOJqWjg2qW/Mb6zNsDm+u5vFQ8DxXfbM09z69p5Z6+mE1ikP2jUXw+j42Pf1XTYED2Rni5f95npYeuwMDQA==",
+       "license": "MIT",
+-      "peer": true,
+       "dependencies": {
+         "@babel/code-frame": "^7.29.0",
+         "@babel/generator": "^7.29.0",
+@@ -2770,7 +2769,6 @@
+       "integrity": "sha512-qoQprZvz5wQFJwMDqeseRXWv3rqMvhgpbXFfVyWhbx9X47POIA6i/+dXefEmZKoAgOaTdaIgNSMqMIU61yRyzA==",
+       "devOptional": true,
+       "license": "MIT",
+-      "peer": true,
+       "dependencies": {
+         "@babel/parser": "^7.20.7",
+         "@babel/types": "^7.20.7",
+@@ -2851,7 +2849,6 @@
+       "integrity": "sha512-z9VXpC7MWrhfWipitjNdgCauoMLRdIILQsAEV+ZesIzBq/oUlxk0m3ApZuMFCXdnS4U7KrI+l3WRUEGQ8K1QKw==",
+       "devOptional": true,
+       "license": "MIT",
+-      "peer": true,
+       "dependencies": {
+         "@types/prop-types": "*",
+         "csstype": "^3.2.2"
+@@ -2933,7 +2930,6 @@
+       "integrity": "sha512-IgSWvLobTDOjnaxAfDTIHaECbkNlAlKv2j5SjpB2v7QHKv1FIfjwMy8FsDbVfDX/KjmCmYICcw7uGaXLhtsLNg==",
+       "dev": true,
+       "license": "MIT",
+-      "peer": true,
+       "dependencies": {
+         "@typescript-eslint/scope-manager": "8.56.0",
+         "@typescript-eslint/types": "8.56.0",
+@@ -3197,7 +3193,6 @@
+       "resolved": "https://registry.npmjs.org/acorn/-/acorn-8.16.0.tgz",
+       "integrity": "sha512-UVJyE9MttOsBQIDKw1skb9nAwQuR5wuGD3+82K6JgJlm/Y+KI92oNsMNGZCYdDsVtRHSak0pcV5Dno5+4jh9sw==",
+       "license": "MIT",
+-      "peer": true,
+       "bin": {
+         "acorn": "bin/acorn"
+       },
+@@ -3526,7 +3521,6 @@
+         }
+       ],
+       "license": "MIT",
+-      "peer": true,
+       "dependencies": {
+         "baseline-browser-mapping": "^2.9.0",
+         "caniuse-lite": "^1.0.30001759",
+@@ -4185,7 +4179,6 @@
+       "integrity": "sha512-VmQ+sifHUbI/IcSopBCF/HO3YiHQx/AVd3UVyYL6weuwW+HvON9VYn5l6Zl1WZzPWXPNZrSQpxwkkZ/VuvJZzg==",
+       "dev": true,
+       "license": "MIT",
+-      "peer": true,
+       "dependencies": {
+         "@eslint-community/eslint-utils": "^4.8.0",
+         "@eslint-community/regexpp": "^4.12.1",
+@@ -5498,7 +5491,6 @@
+       "integrity": "sha512-/imKNG4EbWNrVjoNC/1H5/9GFy+tqjGBHCaSsN+P2RnPqjsLmv6UD3Ej+Kj8nBWaRAwyk7kK5ZUc+OEatnTR3A==",
+       "devOptional": true,
+       "license": "MIT",
+-      "peer": true,
+       "bin": {
+         "jiti": "bin/jiti.js"
+       }
+@@ -5608,8 +5600,7 @@
+       "version": "1.9.4",
+       "resolved": "https://registry.npmjs.org/leaflet/-/leaflet-1.9.4.tgz",
+       "integrity": "sha512-nxS1ynzJOmOlHp+iL3FyWqK89GtNL8U8rvlMOsQdTTssxZwCXh8N2NB3GDQOL+YR3XnWyZAxwQixURb+FA74PA==",
+-      "license": "BSD-2-Clause",
+-      "peer": true
++      "license": "BSD-2-Clause"
+     },
+     "node_modules/leven": {
+       "version": "3.1.0",
+@@ -6126,7 +6117,6 @@
+         }
+       ],
+       "license": "MIT",
+-      "peer": true,
+       "dependencies": {
+         "nanoid": "^3.3.11",
+         "picocolors": "^1.1.1",
+@@ -6336,7 +6326,6 @@
+       "resolved": "https://registry.npmjs.org/react/-/react-18.3.1.tgz",
+       "integrity": "sha512-wS+hAgJShR0KhEvPJArfuPVN1+Hz1t0Y6n5jLrGQbkb4urgPE/0Rve+1kMB1v/oWgHgm4WIcV+i7F2pTVj+2iQ==",
+       "license": "MIT",
+-      "peer": true,
+       "dependencies": {
+         "loose-envify": "^1.1.0"
+       },
+@@ -6349,7 +6338,6 @@
+       "resolved": "https://registry.npmjs.org/react-dom/-/react-dom-18.3.1.tgz",
+       "integrity": "sha512-5m4nQKp+rZRb09LNH59GM4BxTh9251/ylbKIbpe7TpGxfJ+9kv6BLkLBXIjjspbgbnIBNqlI23tRnTWT0snUIw==",
+       "license": "MIT",
+-      "peer": true,
+       "dependencies": {
+         "loose-envify": "^1.1.0",
+         "scheduler": "^0.23.2"
+@@ -6593,7 +6581,6 @@
+       "resolved": "https://registry.npmjs.org/rollup/-/rollup-4.58.0.tgz",
+       "integrity": "sha512-wbT0mBmWbIvvq8NeEYWWvevvxnOyhKChir47S66WCxw1SXqhw7ssIYejnQEVt7XYQpsj2y8F9PM+Cr3SNEa0gw==",
+       "license": "MIT",
+-      "peer": true,
+       "dependencies": {
+         "@types/estree": "1.0.8"
+       },
+@@ -7310,7 +7297,6 @@
+       "resolved": "https://registry.npmjs.org/picomatch/-/picomatch-4.0.3.tgz",
+       "integrity": "sha512-5gTmgEY/sqK6gFXLIsQNH19lWb4ebPDLA4SdLP7dsWkIXHWlG66oPuVvXSGFPppYZz8ZDZq0dYYrbHfBCVUb1Q==",
+       "license": "MIT",
+-      "peer": true,
+       "engines": {
+         "node": ">=12"
+       },
+@@ -7492,7 +7478,6 @@
+       "integrity": "sha512-p1diW6TqL9L07nNxvRMM7hMMw4c5XOo/1ibL4aAIGmSAt9slTE1Xgw5KWuof2uTOvCg9BY7ZRi+GaF+7sfgPeQ==",
+       "dev": true,
+       "license": "Apache-2.0",
+-      "peer": true,
+       "bin": {
+         "tsc": "bin/tsc",
+         "tsserver": "bin/tsserver"
+@@ -7672,7 +7657,6 @@
+       "resolved": "https://registry.npmjs.org/vite/-/vite-6.4.1.tgz",
+       "integrity": "sha512-+Oxm7q9hDoLMyJOYfUYBuHQo+dkAloi33apOPP56pzj+vsdJDzr+j1NISE5pyaAuKL4A3UD34qd0lx5+kfKp2g==",
+       "license": "MIT",
+-      "peer": true,
+       "dependencies": {
+         "esbuild": "^0.25.0",
+         "fdir": "^6.4.4",
+@@ -7827,7 +7811,6 @@
+       "resolved": "https://registry.npmjs.org/picomatch/-/picomatch-4.0.3.tgz",
+       "integrity": "sha512-5gTmgEY/sqK6gFXLIsQNH19lWb4ebPDLA4SdLP7dsWkIXHWlG66oPuVvXSGFPppYZz8ZDZq0dYYrbHfBCVUb1Q==",
+       "license": "MIT",
+-      "peer": true,
+       "engines": {
+         "node": ">=12"
+       },
+@@ -8110,7 +8093,6 @@
+       "resolved": "https://registry.npmjs.org/ajv/-/ajv-8.18.0.tgz",
+       "integrity": "sha512-PlXPeEWMXMZ7sPYOHqmDyCJzcfNrUr3fGNKtezX14ykXOEIvyK81d+qydx89KY5O71FKMPaQ2vBfBFI5NHR63A==",
+       "license": "MIT",
+-      "peer": true,
+       "dependencies": {
+         "fast-deep-equal": "^3.1.3",
+         "fast-uri": "^3.0.1",
+@@ -8151,7 +8133,6 @@
+       "resolved": "https://registry.npmjs.org/rollup/-/rollup-2.79.2.tgz",
+       "integrity": "sha512-fS6iqSPZDs3dr/y7Od6y5nha8dW1YnbgtsyotCVvoFGKbERG++CVRFv1meyGDE1SNItQA8BrnCw7ScdAhRJ3XQ==",
+       "license": "MIT",
+-      "peer": true,
+       "bin": {
+         "rollup": "dist/bin/rollup"
+       },
+
+commit 5f239434ef13b6c161f4f8c6f6284b328f85d53f
+Author: Trae AI <trae-ai@example.com>
+Date:   Tue Feb 24 18:51:02 2026 +0900
+
+    Feat: Add automatic anonymous login and require nickname for posts
+
+diff --git a/src/contexts/AuthContext.tsx b/src/contexts/AuthContext.tsx
+index b3133fc..feb9516 100644
+--- a/src/contexts/AuthContext.tsx
++++ b/src/contexts/AuthContext.tsx
+@@ -31,11 +31,23 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
+       return;
+     }
+ 
+-    supabase.auth.getSession().then(({ data: { session } }) => {
+-      setSession(session);
+-      setUser(session?.user ?? null);
+-      setLoading(false);
+-    });
++    const initAuth = async () => {
++        const { data: { session } } = await supabase.auth.getSession();
++        if (session) {
++            setSession(session);
++            setUser(session.user);
++        } else {
++            // Auto sign-in anonymously on load
++            const { data, error } = await supabase.auth.signInAnonymously();
++            if (!error && data.session) {
++                setSession(data.session);
++                setUser(data.user);
++            }
++        }
++        setLoading(false);
++    };
++    
++    initAuth();
+ 
+     const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+       setSession(session);
+diff --git a/src/pages/Home.tsx b/src/pages/Home.tsx
+index 9db6218..e1a6dcc 100644
+--- a/src/pages/Home.tsx
++++ b/src/pages/Home.tsx
+@@ -17,6 +17,8 @@ export const Home: React.FC = () => {
+     }
+   };
+ 
++  // Auto sign-in logic is handled in AuthContext now, so user is ready to play immediately.
++
+   return (
+     <div className="flex flex-col items-center justify-center min-h-[80vh] py-4">
+       {/* Top Image */}
+diff --git a/src/pages/Login.tsx b/src/pages/Login.tsx
+index a4f696e..3c91926 100644
+--- a/src/pages/Login.tsx
++++ b/src/pages/Login.tsx
+@@ -6,19 +6,19 @@ import { Button } from '../components/ui/Button';
+ export const Login: React.FC = () => {
+   const [nickname, setNickname] = useState('');
+   const [loading, setLoading] = useState(false);
+-  const { signInAnonymously, updateNickname } = useAuth();
++  const { updateNickname } = useAuth(); // Already signed in anonymously
+   const navigate = useNavigate();
+ 
+   const handleLogin = async (e: React.FormEvent) => {
+     e.preventDefault();
+     setLoading(true);
+     try {
+-      await signInAnonymously(nickname);
+       await updateNickname(nickname);
+-      navigate('/');
++      // Go back to previous page or home
++      navigate(-1);
+     } catch (error) {
+-      console.error('Login error:', error);
+-      alert('ログインに失敗しました');
++      console.error('Update profile error:', error);
++      alert('プロフィールの更新に失敗しました');
+     } finally {
+       setLoading(false);
+     }
+diff --git a/src/pages/Post.tsx b/src/pages/Post.tsx
+index 26857f7..ff823c9 100644
+--- a/src/pages/Post.tsx
++++ b/src/pages/Post.tsx
+@@ -6,9 +6,9 @@ import { supabase, hasSupabaseEnv } from '../lib/supabase';
+ import { useAuth } from '../contexts/AuthContext';
+ 
+ export const Post: React.FC = () => {
++  const { user } = useAuth();
+   const navigate = useNavigate();
+   const fileInputRef = useRef<HTMLInputElement>(null);
+-  const { signInAnonymously } = useAuth();
+   
+   const [content, setContent] = useState('');
+   const [file, setFile] = useState<File | null>(null);
+@@ -56,6 +56,12 @@ export const Post: React.FC = () => {
+       return;
+     }
+ 
++    if (!user?.user_metadata?.full_name) {
++      alert('投稿するにはニックネームが必要です');
++      navigate('/login');
++      return;
++    }
++
+     setIsSubmitting(true);
+ 
+     try {
+@@ -96,9 +102,6 @@ export const Post: React.FC = () => {
+       // I should sign in anonymously if not signed in.
+       
+       const { data: { session } } = await supabase.auth.getSession();
+-      if (!session) {
+-        await signInAnonymously();
+-      }
+ 
+       const { error: insertError } = await supabase.from('posts').insert({
+         content,
