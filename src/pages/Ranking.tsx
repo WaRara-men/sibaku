@@ -12,6 +12,8 @@ interface ScoreEntry {
 
 export const Ranking: React.FC = () => {
   const [scores, setScores] = useState<ScoreEntry[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [activeDuration, setActiveDuration] = useState<number>(30);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
