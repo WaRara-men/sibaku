@@ -22,6 +22,15 @@ export const Home: React.FC = () => {
   return (
     <div className="flex flex-col items-center justify-center min-h-[80vh] py-4">
 
+      <header className="mb-8 text-center relative">
+        <div className="absolute top-0 right-0 bg-red-600 text-white text-[10px] font-black px-2 py-0.5 rounded-bl-lg transform rotate-3">
+          V2.0-LIVE
+        </div>
+        <div className="inline-block relative">
+          {/* This div was empty in the instruction, assuming it's a placeholder or part of a larger structure not fully provided */}
+        </div>
+      </header>
+
       <div className="w-full space-y-4 px-4">
         <InstallButton />
 
