@@ -21,12 +21,32 @@ export const Layout: React.FC = () => {
         <Link to="/" className="text-xl font-black text-red-600 tracking-tighter">
           しばく！！
         </Link>
-        <Link to="/login" className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-zinc-100 hover:bg-zinc-200 transition-colors border-2 border-transparent active:border-red-500">
-          <User className="w-4 h-4 text-zinc-600" />
-          <span className="text-xs font-bold text-zinc-600 truncate max-w-[80px]">
-            {user?.user_metadata?.full_name || 'ログイン'}
-          </span>
-        </Link>
+        <div className="flex items-center gap-2">
+          {user ? (
+            <div className="flex items-center gap-2">
+              <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-red-50 border-2 border-red-500 shadow-sm">
+                <User className="w-4 h-4 text-red-600" />
+                <span className="text-xs font-black text-red-600 truncate max-w-[80px]">
+                  {user?.user_metadata?.full_name || 'しばき屋'}
+                </span>
+              </div>
+              <button
+                onClick={() => signOut()}
+                className="p-1.5 rounded-full bg-zinc-100 hover:bg-zinc-200 text-zinc-500"
+                title="ログアウト"
+              >
+                <Settings className="w-4 h-4" />
+              </button>
+            </div>
+          ) : (
+            <Link to="/login" className="flex items-center gap-2 px-4 py-2 rounded-full bg-red-600 hover:bg-red-500 transition-all border-4 border-black shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] active:translate-y-0.5 active:shadow-none animate-pulse-slow">
+              <User className="w-4 h-4 text-white" />
+              <span className="text-xs font-black text-white uppercase italic">
+                Login
+              </span>
+            </Link>
+          )}
+        </div>
       </header>
 
       <main className="flex-1 flex flex-col container mx-auto px-4 py-6 max-w-md w-full">

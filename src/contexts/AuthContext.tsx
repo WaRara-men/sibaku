@@ -6,18 +6,20 @@ interface AuthContextType {
   session: Session | null;
   user: User | null;
   loading: boolean;
-  signInAnonymously: (nickname?: string) => Promise<void>;
-  signOut: () => Promise<void>;
   updateNickname: (nickname: string) => Promise<void>;
+  signOut: () => Promise<void>;
+  signUp: (email: string, password: string, nickname: string) => Promise<void>;
+  signInWithEmail: (email: string, password: string) => Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextType>({
   session: null,
   user: null,
   loading: true,
-  signInAnonymously: async () => {},
-  signOut: async () => {},
-  updateNickname: async () => {},
+  signOut: async () => { },
+  updateNickname: async () => { },
+  signUp: async () => { },
+  signInWithEmail: async () => { },
 });
 
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
@@ -32,21 +34,14 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }
 
     const initAuth = async () => {
-        const { data: { session } } = await supabase.auth.getSession();
-        if (session) {
-            setSession(session);
-            setUser(session.user);
-        } else {
-            // Auto sign-in anonymously on load
-            const { data, error } = await supabase.auth.signInAnonymously();
-            if (!error && data.session) {
-                setSession(data.session);
-                setUser(data.user);
-            }
-        }
-        setLoading(false);
+      const { data: { session } } = await supabase.auth.getSession();
+      if (session) {
+        setSession(session);
+        setUser(session.user);
+      }
+      setLoading(false);
     };
-    
+
     initAuth();
 
     const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
@@ -58,22 +53,33 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     return () => subscription.unsubscribe();
   }, []);
 
-  const signInAnonymously = async (nickname?: string) => {
+  const signUp = async (email: string, password: string, nickname: string) => {
     if (!hasSupabaseEnv || !supabase) return;
-    const { error } = await supabase.auth.signInAnonymously({
-        options: {
-            data: nickname ? { full_name: nickname } : undefined
-        }
+    const { error } = await supabase.auth.signUp({
+      email,
+      password,
+      options: {
+        data: { full_name: nickname }
+      }
+    });
+    if (error) throw error;
+  };
+
+  const signInWithEmail = async (email: string, password: string) => {
+    if (!hasSupabaseEnv || !supabase) return;
+    const { error } = await supabase.auth.signInWithPassword({
+      email,
+      password
     });
     if (error) throw error;
   };
 
   const updateNickname = async (nickname: string) => {
-      if (!hasSupabaseEnv || !supabase) return;
-      const { error } = await supabase.auth.updateUser({
-          data: { full_name: nickname }
-      });
-      if (error) throw error;
+    if (!hasSupabaseEnv || !supabase) return;
+    const { error } = await supabase.auth.updateUser({
+      data: { full_name: nickname }
+    });
+    if (error) throw error;
   };
 
   const signOut = async () => {
@@ -82,7 +88,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   };
 
   return (
-    <AuthContext.Provider value={{ session, user, loading, signInAnonymously, signOut, updateNickname }}>
+    <AuthContext.Provider value={{ session, user, loading, signOut, updateNickname, signUp, signInWithEmail }}>
       {children}
     </AuthContext.Provider>
   );
