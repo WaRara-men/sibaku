@@ -5,7 +5,7 @@ import { Game } from './pages/Game';
 import { Post } from './pages/Post';
 import { Timeline } from './pages/Timeline';
 import { Ranking } from './pages/Ranking';
-import { Login } from './pages/Login';
+import { Login } from './pages/LoginPage';
 import { hasSupabaseEnv } from './lib/supabase';
 
 function App() {
