@@ -12,8 +12,7 @@ interface ScoreEntry {
 
 export const Ranking: React.FC = () => {
   const [scores, setScores] = useState<ScoreEntry[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [activeDuration, setActiveDuration] = useState<number>(30);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     fetchRanking();
@@ -26,14 +25,20 @@ export const Ranking: React.FC = () => {
     }
 
     setLoading(true);
-    const { data, error } = await supabase
+    setError(null);
+    const { data, error: fetchError } = await supabase
       .from('game_scores')
       .select('*')
       .eq('duration', activeDuration)
       .order('score', { ascending: false })
       .limit(20);
 
-    if (!error) setScores(data || []);
+    if (fetchError) {
+      console.error('Fetch ranking error:', fetchError);
+      setError('データの取得に失敗しました。RLSの設定を確認してください。');
+    } else {
+      setScores(data || []);
+    }
     setLoading(false);
   };
 
@@ -111,7 +116,14 @@ export const Ranking: React.FC = () => {
           );
         })}
 
-        {!loading && scores.length === 0 && (
+        {error && (
+          <div className="text-center py-10 px-6 bg-red-50 rounded-3xl border-4 border-red-200 text-red-600 font-bold">
+            <p>{error}</p>
+            <p className="text-xs mt-2 opacity-70 italic">Supabaseの game_scores テーブルとRLSポリシーが正しく設定されているか確認してください。</p>
+          </div>
+        )}
+
+        {!loading && !error && scores.length === 0 && (
           <div className="text-center py-16 px-6 bg-white rounded-3xl border-4 border-dashed border-zinc-200 space-y-4">
             <div className="flex justify-center">
               <TrendingUp className="w-12 h-12 text-zinc-300" />
